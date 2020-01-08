@@ -59,7 +59,8 @@ t_mu(plot_S) # one day I'll make this better
 # exp(lambda * t) = 2  (change sign of exponent = reciprocal)
 # lambda * t = log(2)
 # t_med = log(2)/lambda
-t_med = log(2)/h(1) # t is arbitrary here
+t_med <- log(2)/h(1) # t is arbitrary here
+t_med
 
 # weibull
 set_alpha_lambda <- function(alpha, lambda) {
