@@ -28,6 +28,7 @@ with(dtfr
 
 data("pancreatic")
 attach(pancreatic)
+head(pancreatic)
 # convert the text dates into R dates
 Progression <- mdy(progression)
 OnStudy <- mdy(onstudy)

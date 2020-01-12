@@ -1,5 +1,8 @@
 library(survival)
 library(muhaz)
+library(bshazard)
+library(kmconfband)
+library(DTDA)
 
 ex1.1 <- data.frame(YoE = c(1990, 1990, 1991, 1991, 1992)
                     , YoX = c(1995, 1995, 1995, 1994, 1993)
@@ -93,7 +96,7 @@ plot(result.pe5, ylim=c(0,0.15), col="black", lty=3)
 result.pe1 <- pehaz(timeMonths, delta, width=1, max.time=20)
 lines(result.pe1)
 # show the smooth hazard fuction using the kernel method
-result.smooth <- muhaz(timeMonths, delta, bw.smooth=10
+result.smooth <- muhaz(timeMonths, delta, bw.smooth=10# , bw.grid=10
                        , b.cor="left", max.time=20)
 lines(result.smooth, col = "red")
 # automatic smoothing
@@ -101,6 +104,8 @@ result.smooth2 <- muhaz(timeMonths, delta
                        , b.cor="left", max.time=20
                        , bw.method="local")
 lines(result.smooth2, col = "green")
+
+lines(bshazard(Surv(timeMonths, delta) ~ 1, lambda = 100)) # object with fitted values
 
 # getting smooth survival function from the smoothed hazard
 haz <- result.smooth$haz.est
@@ -114,6 +119,10 @@ result.km <- survfit(Surv(timeMonths, delta) ~ 1,
 plot(result.km, conf.int=T, mark="|", xlab="Time in months",
      xlim=c(0,30), ylab="Survival probability")
 lines(surv ~ times[1:(length(times) - 1)])
+
+cf <- confband(result.km, 0.1)
+lines(result.km$time[1:(nrow(cf))], cf[,1])
+lines(result.km$time[1:(nrow(cf))], cf[,2])
 
 # left truncation
 ltrunc <- data.frame(diag = -c(2, 5, 3, 3, 2, 5, 4) # when was the diagnosis relative to trial start
