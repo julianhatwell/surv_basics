@@ -150,4 +150,3 @@ my_plot(curve_H, 5, ylab = "cumhaz")
 my_plot(curve_S, 5, ylab = "survfunc")
 my_plot(curve_pdf, 5, ylab = "pdf")
 my_plot(curve_CDF, 5, ylab = "CDF")
-
